@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'HomeController@index')->name('home');
-
 Auth::routes();
+Route::get('/', 'AppController@index')->name('home');
+Route::get('/admin', 'AppController@admin')->where('any', '.*');
