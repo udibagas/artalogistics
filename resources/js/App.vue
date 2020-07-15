@@ -27,16 +27,24 @@ export default {
       collapse: false,
       menus: [
         { label: "Dashboard", path: "/", icon: "el-icon-s-home" },
-        { label: "About", path: "/about", icon: "el-icon-s-home" },
-        { label: "Services", path: "/service", icon: "el-icon-s-home" },
-        { label: "Call to Action", path: "/cta", icon: "el-icon-s-home" },
-        { label: "Features", path: "/features", icon: "el-icon-s-home" },
-        { label: "Client", path: "/client", icon: "el-icon-s-home" },
-        { label: "Counter", path: "/counter", icon: "el-icon-s-home" },
-        { label: "Portfolio", path: "/portfolio", icon: "el-icon-s-home" },
-        { label: "Pricing", path: "/pricing", icon: "el-icon-s-home" },
-        { label: "FAQ", path: "/faq", icon: "el-icon-s-home" },
-        { label: "Contact", path: "/contact", icon: "el-icon-s-home" },
+        { label: "About", path: "/about", icon: "el-icon-info" },
+        { label: "Services", path: "/service", icon: "el-icon-menu" },
+        {
+          label: "Call to Action",
+          path: "/cta",
+          icon: "el-icon-phone-outline"
+        },
+        { label: "Features", path: "/features", icon: "el-icon-document-copy" },
+        { label: "Client", path: "/client", icon: "el-icon-connection" },
+        { label: "Counter", path: "/counter", icon: "el-icon-odometer" },
+        {
+          label: "Portfolio",
+          path: "/portfolio",
+          icon: "el-icon-picture-outline"
+        },
+        { label: "Pricing", path: "/pricing", icon: "el-icon-money" },
+        { label: "FAQ", path: "/faq", icon: "el-icon-question" },
+        { label: "Contact", path: "/contact", icon: "el-icon-map-location" },
         { label: "User", path: "/user", icon: "el-icon-user" }
       ]
     };
