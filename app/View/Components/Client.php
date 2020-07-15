@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Client as AppClient;
 use Illuminate\View\Component;
 
 class Client extends Component
@@ -23,6 +24,6 @@ class Client extends Component
      */
     public function render()
     {
-        return view('components.client');
+        return view('components.client', ['clients' => AppClient::all()]);
     }
 }
