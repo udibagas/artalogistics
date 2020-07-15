@@ -15,5 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::get('/', 'AppController@index')->name('home');
-Route::resource('user', 'UserController')->only(['index', 'store', 'update', 'destroy']);
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('user', 'UserController')->only(['index', 'store', 'update', 'destroy']);
+    Route::resource('client', 'ClientController')->only(['index', 'store', 'update', 'destroy']);
+    Route::post('upload', 'AttachmentController@upload');
+});
+
+
 Route::get('/admin', 'AppController@admin')->where('any', '.*');

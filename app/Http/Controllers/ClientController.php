@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Http\Requests\ClientRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller
 {
@@ -14,17 +16,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Client::orderBy('name')->get();
     }
 
     /**
@@ -33,31 +25,11 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Client  $client
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Client $client)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Client  $client
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Client $client)
-    {
-        //
+        $client = Client::create($request->all());
+        $client->attachment()->create($request->attachment);
+        return ['message' => 'Data has been saved'];
     }
 
     /**
@@ -67,9 +39,21 @@ class ClientController extends Controller
      * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Client $client)
+    public function update(ClientRequest $request, Client $client)
     {
-        //
+        $client->update($request->all());
+
+        // jika ada file baru
+        if (!isset($request->attachment['id'])) {
+            if (Storage::exists($client->attachment->path)) {
+                Storage::delete([$client->attachment->path]);
+            }
+
+            $client->attachment->delete();
+            $client->attachment()->create($request->attachment);
+        }
+
+        return ['message' => 'Data has been saved'];
     }
 
     /**
@@ -80,6 +64,16 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        $client->delete();
+
+        if ($client->attachment) {
+            if (Storage::exists($client->attachment->path)) {
+                Storage::delete([$client->attachment->path]);
+            }
+
+            $client->attachment->delete();
+        }
+
+        return ['message' => 'Data has been deleted'];
     }
 }
