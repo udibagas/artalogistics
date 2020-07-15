@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Feature;
+use App\Http\Requests\FeatureRequest;
 use Illuminate\Http\Request;
 
 class FeatureController extends Controller
@@ -14,17 +15,7 @@ class FeatureController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Feature::all();
     }
 
     /**
@@ -33,31 +24,10 @@ class FeatureController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FeatureRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Feature  $feature
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Feature $feature)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Feature  $feature
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Feature $feature)
-    {
-        //
+        Feature::create($request->all());
+        return ['message' => 'Data has been saved'];
     }
 
     /**
@@ -67,9 +37,10 @@ class FeatureController extends Controller
      * @param  \App\Feature  $feature
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Feature $feature)
+    public function update(FeatureRequest $request, Feature $feature)
     {
-        //
+        $feature->update($request->all());
+        return ['message' => 'Data has been saved'];
     }
 
     /**
@@ -80,6 +51,7 @@ class FeatureController extends Controller
      */
     public function destroy(Feature $feature)
     {
-        //
+        $feature->delete();
+        return ['message' => 'Data has been deleted'];
     }
 }

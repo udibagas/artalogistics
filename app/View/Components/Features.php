@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Feature;
 use Illuminate\View\Component;
 
 class Features extends Component
@@ -23,6 +24,6 @@ class Features extends Component
      */
     public function render()
     {
-        return view('components.features');
+        return view('components.features', ['features' => Feature::all()]);
     }
 }
