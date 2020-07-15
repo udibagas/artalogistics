@@ -15,4 +15,5 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::get('/', 'AppController@index')->name('home');
+Route::resource('user', 'UserController')->only(['index', 'store', 'update', 'destroy']);
 Route::get('/admin', 'AppController@admin')->where('any', '.*');

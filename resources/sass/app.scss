@@ -6,3 +6,7 @@
 @import '~element-ui/lib/theme-chalk/index.css';
 @import '~element-ui/lib/theme-chalk/display.css';
 @import "~vue-wysiwyg/dist/vueWysiwyg.css";
+
+.el-table {
+    border-top: 2px solid #EBEEF5
+}
