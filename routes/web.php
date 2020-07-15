@@ -19,6 +19,7 @@ Route::get('/', 'AppController@index')->name('home');
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('user', 'UserController')->only(['index', 'store', 'update', 'destroy']);
     Route::resource('client', 'ClientController')->only(['index', 'store', 'update', 'destroy']);
+    Route::resource('service', 'ServiceController')->only(['index', 'store', 'update', 'destroy']);
     Route::post('upload', 'AttachmentController@upload');
 });
 

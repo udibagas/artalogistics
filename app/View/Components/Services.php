@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Service;
 use Illuminate\View\Component;
 
 class Services extends Component
@@ -23,6 +24,6 @@ class Services extends Component
      */
     public function render()
     {
-        return view('components.services');
+        return view('components.services', ['services' => Service::all()]);
     }
 }
