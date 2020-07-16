@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PortfolioRequest;
 use App\Portfolio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PortfolioController extends Controller
 {
@@ -14,17 +16,7 @@ class PortfolioController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Portfolio::latest()->get();
     }
 
     /**
@@ -33,9 +25,15 @@ class PortfolioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PortfolioRequest $request)
     {
-        //
+        $portfolio = Portfolio::create(array_merge(
+            $request->all(),
+            ['user_id' => $request->user()->id]
+        ));
+
+        $portfolio->attachment()->create($request->attachment);
+        return ['message' => 'Data has been saved'];
     }
 
     /**
@@ -50,26 +48,27 @@ class PortfolioController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Portfolio  $portfolio
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Portfolio $portfolio)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Portfolio  $portfolio
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Portfolio $portfolio)
+    public function update(PortfolioRequest $request, Portfolio $portfolio)
     {
-        //
+        $portfolio->update($request->all());
+
+        // jika ada file baru
+        if (!isset($request->attachment['id'])) {
+            if (Storage::exists($portfolio->attachment->path)) {
+                Storage::delete([$portfolio->attachment->path]);
+            }
+
+            $portfolio->attachment->delete();
+            $portfolio->attachment()->create($request->attachment);
+        }
+
+        return ['message' => 'Data has been saved'];
     }
 
     /**
@@ -80,6 +79,16 @@ class PortfolioController extends Controller
      */
     public function destroy(Portfolio $portfolio)
     {
-        //
+        $portfolio->delete();
+
+        if ($portfolio->attachment) {
+            if (Storage::exists($portfolio->attachment->path)) {
+                Storage::delete([$portfolio->attachment->path]);
+            }
+
+            $portfolio->attachment->delete();
+        }
+
+        return ['message' => 'Data has been deleted'];
     }
 }

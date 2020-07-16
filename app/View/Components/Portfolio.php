@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Portfolio as AppPortfolio;
 use Illuminate\View\Component;
 
 class Portfolio extends Component
@@ -23,6 +24,6 @@ class Portfolio extends Component
      */
     public function render()
     {
-        return view('components.portfolio');
+        return view('components.portfolio', ['portfolios' => AppPortfolio::all()]);
     }
 }
