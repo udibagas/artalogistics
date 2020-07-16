@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Faq as AppFaq;
 use Illuminate\View\Component;
 
 class Faq extends Component
@@ -23,6 +24,6 @@ class Faq extends Component
      */
     public function render()
     {
-        return view('components.faq');
+        return view('components.faq', ['faqs' => AppFaq::all()]);
     }
 }

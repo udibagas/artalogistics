@@ -21,6 +21,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('client', 'ClientController')->only(['index', 'store', 'update', 'destroy']);
     Route::resource('service', 'ServiceController')->only(['index', 'store', 'update', 'destroy']);
     Route::resource('feature', 'FeatureController')->only(['index', 'store', 'update', 'destroy']);
+    Route::resource('portfolio', 'PortfolioController')->only(['index', 'store', 'update', 'destroy']);
+    Route::resource('faq', 'FaqController')->only(['index', 'store', 'update', 'destroy']);
     Route::post('upload', 'AttachmentController@upload');
 });
 
